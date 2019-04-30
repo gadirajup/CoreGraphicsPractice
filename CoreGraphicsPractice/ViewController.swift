@@ -19,6 +19,31 @@ class ViewController: UIViewController {
         drawRectangle()
     }
     
+    func drawImagesAndText() {
+        // 1
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let img = renderer.image { ctx in
+            // 2
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            
+            // 3
+            let attrs = [NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-Thin", size: 36)!, NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            
+            // 4
+            let string = "The best-laid schemes o'\nmice an' men gang aft agley"
+            string.draw(with: CGRect(x: 32, y: 32, width: 448, height: 448), options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
+            
+            // 5
+            let mouse = UIImage(named: "mouse")
+            mouse?.draw(at: CGPoint(x: 300, y: 150))
+        }
+        
+        // 6
+        imageView.image = img
+    }
+    
     func drawRotatedSquares() {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
         
@@ -118,7 +143,7 @@ class ViewController: UIViewController {
         
         currentDrawType += 1
         
-        if currentDrawType >= 5 {
+        if currentDrawType > 5 {
             currentDrawType = 0
         }
         
@@ -133,6 +158,8 @@ class ViewController: UIViewController {
             drawRotatedSquares()
         case 4:
             drawLines()
+        case 5:
+            drawImagesAndText()
         default:
             break
         }
